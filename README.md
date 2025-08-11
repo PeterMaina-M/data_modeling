@@ -1,5 +1,9 @@
 # Data Modeling Project for Sparkify
-Sparkify wants to analyze the data they've been collecting on songs and user activity on their new music streaming app. Currently, there is no easy way to query the data to generate the results, since the data reside in a directory of CSV files on user activity on the app. I created an Apache Cassandra database to be queried.
+Sparkify wants to analyze the data they've been collecting on songs and user activity on their new music streaming app. Currently, there is no easy way to query the data to generate the results, since the data reside in a directory of CSV files on user activity on the app. I created an Apache Cassandra database to be queried or answer the following questions:
+
+1. Give me the artist, song title and song's length in the music app history that was heard during sessionId = 338, and itemInSession = 4
+2. Give me only the following: name of artist, song (sorted by itemInSession) and user (first and last name) for userid = 10, sessionid = 182
+3. Give me every user name (first and last) in my music app history who listened to the song 'All Hands Against His Own'
 
 To successfully complete this project, I intend to provide the following deliverables:
 1. Read all CSV files from the directory and combine their data into one big list in memory.
@@ -40,4 +44,5 @@ Output: <img width="438" height="48" alt="query 1" src="https://github.com/user-
 Output: <img width="658" height="86" alt="query 2" src="https://github.com/user-attachments/assets/4fbef7fb-4563-483a-8cd9-67a650b34cfc" />
 
 6. Create table for Query #3
-Output: <img width="157" height="66" alt="query 3" src="https://github.com/user-attachments/assets/f37e07af-db27-4d41-81fc-a836da2f9660" />
+Output:
+<img width="157" height="66" alt="query 3" src="https://github.com/user-attachments/assets/f37e07af-db27-4d41-81fc-a836da2f9660" />
