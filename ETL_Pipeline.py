@@ -61,3 +61,4 @@ with open('event_datafile_new.csv', 'w', encoding = 'utf8', newline='') as f:
 # data quality check (check the number of rows)
 with open('event_datafile_new.csv', 'r', encoding = 'utf8') as f:
     print(sum(1 for line in f))
+
