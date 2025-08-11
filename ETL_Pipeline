@@ -1,0 +1,63 @@
+# Import Python packages 
+import pandas as pd
+import cassandra
+import re
+import os
+import glob
+import numpy as np
+import json
+import csv
+
+# checking the current working directory
+print(os.getcwd())
+
+# Get current folder and subfolders
+filepath = os.getcwd() + '/event_data'
+
+# Loop through folders and files
+file_path_list = []
+
+for root, dirs, files in os.walk(filepath):
+    # Get all paths in the current directory
+    paths = glob.glob(os.path.join(root, '*'))
+    file_path_list.extend(paths)
+
+print(file_path_list)
+
+# initiating an empty list of rows that will be generated from each file
+full_data_rows_list = [] 
+    
+# for every filepath in the file path list 
+for f in file_path_list:
+
+# reading csv file 
+# This loop is memory efficient compared to Panda's because it reads one row at a time where as Pandas reads the whole file at once
+    with open(f, 'r', encoding = 'utf8', newline='') as csvfile:
+        
+        # creating a csv reader object 
+        csvreader = csv.reader(csvfile)
+        next(csvreader) #Skips the header row so you don’t mix it with the data.
+        
+ # extracting each data row one by one and append it        
+        for line in csvreader:
+            #print(line)
+            full_data_rows_list.append(line) 
+            
+
+# creating a smaller event data csv file called event_datafile_full csv that will be used to insert data into the \
+# Apache Cassandra tables
+csv.register_dialect('myDialect', quoting=csv.QUOTE_ALL, skipinitialspace=True)
+
+with open('event_datafile_new.csv', 'w', encoding = 'utf8', newline='') as f:
+    writer = csv.writer(f, dialect='myDialect')
+    writer.writerow(['artist','firstName','gender','itemInSession','lastName','length',\
+                'level','location','sessionId','song','userId'])
+    for row in full_data_rows_list:
+        if (row[0] == ''):
+            continue
+        writer.writerow((row[0], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[12], row[13], row[16]))
+
+
+# data quality check (check the number of rows)
+with open('event_datafile_new.csv', 'r', encoding = 'utf8') as f:
+    print(sum(1 for line in f))
